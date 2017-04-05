@@ -1,0 +1,10 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+clutter-dev
+python3-dev
+pygobject-dev
+libgee-dev
+gobject-introspection-dev
+gobject-introspection-data
+libxslt-bin
+pygobject-python
