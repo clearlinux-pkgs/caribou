@@ -4,17 +4,18 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 2
+Release  : 3
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Summary  : The Caribou virtual on-screen keyboard library
 Group    : Development/Tools
 License  : LGPL-2.1
 Requires: caribou-bin
-Requires: caribou-python
+Requires: caribou-python3
 Requires: caribou-data
 Requires: caribou-lib
 Requires: caribou-locales
+Requires: caribou-python
 BuildRequires : clutter-dev
 BuildRequires : gettext
 BuildRequires : gobject-introspection-data
@@ -87,17 +88,30 @@ locales components for the caribou package.
 %package python
 Summary: python components for the caribou package.
 Group: Default
+Requires: caribou-python3
 
 %description python
 python components for the caribou package.
+
+
+%package python3
+Summary: python3 components for the caribou package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the caribou package.
 
 
 %prep
 %setup -q -n caribou-0.4.21
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1491416112
+export SOURCE_DATE_EPOCH=1507149611
 %configure --disable-static --disable-schemas-compile PYTHON=/usr/bin/python3
 make V=1  %{?_smp_mflags}
 
@@ -105,11 +119,11 @@ make V=1  %{?_smp_mflags}
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1491416112
+export SOURCE_DATE_EPOCH=1507149611
 rm -rf %{buildroot}
 %make_install
 %find_lang caribou
@@ -161,6 +175,9 @@ rm -rf %{buildroot}
 /usr/lib64/libcaribou.so.0.0.0
 
 %files python
+%defattr(-,root,root,-)
+
+%files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
 
