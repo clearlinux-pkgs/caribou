@@ -4,18 +4,21 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 15
+Release  : 16
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
-Summary  : The Caribou virtual on-screen keyboard library
+Summary  : A text entry and UI navigation application (on-screen keyboard)
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: caribou-bin
-Requires: caribou-python3
-Requires: caribou-data
-Requires: caribou-lib
-Requires: caribou-locales
-Requires: caribou-python
+Requires: caribou-bin = %{version}-%{release}
+Requires: caribou-data = %{version}-%{release}
+Requires: caribou-lib = %{version}-%{release}
+Requires: caribou-libexec = %{version}-%{release}
+Requires: caribou-license = %{version}-%{release}
+Requires: caribou-locales = %{version}-%{release}
+Requires: caribou-python = %{version}-%{release}
+Requires: caribou-python3 = %{version}-%{release}
+BuildRequires : buildreq-gnome
 BuildRequires : clutter-dev
 BuildRequires : gettext
 BuildRequires : gobject-introspection-data
@@ -42,7 +45,9 @@ pointer users.
 %package bin
 Summary: bin components for the caribou package.
 Group: Binaries
-Requires: caribou-data
+Requires: caribou-data = %{version}-%{release}
+Requires: caribou-libexec = %{version}-%{release}
+Requires: caribou-license = %{version}-%{release}
 
 %description bin
 bin components for the caribou package.
@@ -59,10 +64,11 @@ data components for the caribou package.
 %package dev
 Summary: dev components for the caribou package.
 Group: Development
-Requires: caribou-lib
-Requires: caribou-bin
-Requires: caribou-data
-Provides: caribou-devel
+Requires: caribou-lib = %{version}-%{release}
+Requires: caribou-bin = %{version}-%{release}
+Requires: caribou-data = %{version}-%{release}
+Provides: caribou-devel = %{version}-%{release}
+Requires: caribou = %{version}-%{release}
 
 %description dev
 dev components for the caribou package.
@@ -71,10 +77,29 @@ dev components for the caribou package.
 %package lib
 Summary: lib components for the caribou package.
 Group: Libraries
-Requires: caribou-data
+Requires: caribou-data = %{version}-%{release}
+Requires: caribou-libexec = %{version}-%{release}
+Requires: caribou-license = %{version}-%{release}
 
 %description lib
 lib components for the caribou package.
+
+
+%package libexec
+Summary: libexec components for the caribou package.
+Group: Default
+Requires: caribou-license = %{version}-%{release}
+
+%description libexec
+libexec components for the caribou package.
+
+
+%package license
+Summary: license components for the caribou package.
+Group: Default
+
+%description license
+license components for the caribou package.
 
 
 %package locales
@@ -88,7 +113,7 @@ locales components for the caribou package.
 %package python
 Summary: python components for the caribou package.
 Group: Default
-Requires: caribou-python3
+Requires: caribou-python3 = %{version}-%{release}
 
 %description python
 python components for the caribou package.
@@ -111,9 +136,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507149611
+export SOURCE_DATE_EPOCH=1556993851
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static --disable-schemas-compile PYTHON=/usr/bin/python3
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -123,8 +155,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1507149611
+export SOURCE_DATE_EPOCH=1556993851
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/caribou
+cp COPYING %{buildroot}/usr/share/package-licenses/caribou/COPYING
 %make_install
 %find_lang caribou
 
@@ -135,8 +169,6 @@ rm -rf %{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/caribou-preferences
-/usr/libexec/antler-keyboard
-/usr/libexec/caribou
 
 %files data
 %defattr(-,root,root,-)
@@ -173,6 +205,15 @@ rm -rf %{buildroot}
 /usr/lib64/gtk-3.0/modules/libcaribou-gtk-module.so
 /usr/lib64/libcaribou.so.0
 /usr/lib64/libcaribou.so.0.0.0
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/antler-keyboard
+/usr/libexec/caribou
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/caribou/COPYING
 
 %files python
 %defattr(-,root,root,-)
