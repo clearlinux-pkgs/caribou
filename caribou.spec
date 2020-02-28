@@ -4,7 +4,7 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 19
+Release  : 20
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Summary  : A text entry and UI navigation application (on-screen keyboard)
@@ -69,6 +69,7 @@ Requires: caribou-bin = %{version}-%{release}
 Requires: caribou-data = %{version}-%{release}
 Provides: caribou-devel = %{version}-%{release}
 Requires: caribou = %{version}-%{release}
+Requires: caribou = %{version}-%{release}
 
 %description dev
 dev components for the caribou package.
@@ -130,13 +131,16 @@ python3 components for the caribou package.
 
 %prep
 %setup -q -n caribou-0.4.21
+cd %{_builddir}/caribou-0.4.21
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1556993851
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582903601
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -148,17 +152,17 @@ export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1556993851
+export SOURCE_DATE_EPOCH=1582903601
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/caribou
-cp COPYING %{buildroot}/usr/share/package-licenses/caribou/COPYING
+cp %{_builddir}/caribou-0.4.21/COPYING %{buildroot}/usr/share/package-licenses/caribou/80a39eb9544a657a0e23f53a15daff8a1d6a0e7d
 %make_install
 %find_lang caribou
 
@@ -213,7 +217,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/caribou/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/caribou/COPYING
+/usr/share/package-licenses/caribou/80a39eb9544a657a0e23f53a15daff8a1d6a0e7d
 
 %files python
 %defattr(-,root,root,-)
