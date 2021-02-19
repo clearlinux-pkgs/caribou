@@ -4,7 +4,7 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 26
+Release  : 27
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Summary  : The Caribou virtual on-screen keyboard library
