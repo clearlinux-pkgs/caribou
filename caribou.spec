@@ -4,7 +4,7 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 35
+Release  : 36
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Summary  : The Caribou virtual on-screen keyboard library
@@ -137,15 +137,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586222657
+export SOURCE_DATE_EPOCH=1635709111
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static --disable-schemas-compile PYTHON=/usr/bin/python3
 make  %{?_smp_mflags}
 
@@ -154,10 +154,10 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1586222657
+export SOURCE_DATE_EPOCH=1635709111
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/caribou
 cp %{_builddir}/caribou-0.4.21/COPYING %{buildroot}/usr/share/package-licenses/caribou/80a39eb9544a657a0e23f53a15daff8a1d6a0e7d
