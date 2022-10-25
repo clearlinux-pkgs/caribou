@@ -4,7 +4,7 @@
 #
 Name     : caribou
 Version  : 0.4.21
-Release  : 43
+Release  : 44
 URL      : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Source0  : https://download.gnome.org/sources/caribou/0.4/caribou-0.4.21.tar.xz
 Summary  : The Caribou virtual on-screen keyboard library
@@ -137,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664140079
+export SOURCE_DATE_EPOCH=1666720519
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -157,7 +157,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1664140079
+export SOURCE_DATE_EPOCH=1666720519
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/caribou
 cp %{_builddir}/caribou-%{version}/COPYING %{buildroot}/usr/share/package-licenses/caribou/80a39eb9544a657a0e23f53a15daff8a1d6a0e7d || :
